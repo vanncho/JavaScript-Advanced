@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p id="content">
+        Rakiya (Bulgarian brandy) is self-made liquor (alcoholic drink).
+    </p>
+
+<script>
+    let text = extract('content');
+
+    function extract(text) {
+        let allText = document.getElementById(text).textContent;
+        let reg = /\(([^\)]+)\)/g;
+        let result = [];
+        let match = true;
+
+        while (match) {
+            result.push(match[1]);
+            match = reg.exec(allText);
+        }
+
+        return result.join('; ');
+    }
+
+    console.log(text);
+</script>
+</body>
+</html>

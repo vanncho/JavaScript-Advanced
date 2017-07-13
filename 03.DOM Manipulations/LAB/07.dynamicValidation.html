@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Focus</title>
+    <style>
+        .error { border: 2px solid red; }
+    </style>
+</head>
+<body onload="validate()">
+<label for="email">Enter email:</label>
+<input id="email" type="text"/>
+
+<script>
+    function validate() {
+
+        let emailRegex= /^([a-z]+)@([a-z]+)\.([a-z]{2,3})$/;
+        let inputEmail = document.querySelector('input');
+
+        inputEmail.addEventListener('change', checkRegex);
+
+        function checkRegex(event) {
+
+            if (!emailRegex.test(inputEmail.value)) {
+                event.target.className = 'error';
+            } else {
+                event.target.removeAttribute('class');
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

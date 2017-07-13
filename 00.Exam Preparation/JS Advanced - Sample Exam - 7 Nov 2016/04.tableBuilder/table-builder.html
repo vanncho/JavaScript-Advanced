@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Table Builder</title>
+    <style>td,th { background:#DDD; padding:5px }</style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div id="main"></div>
+<script>
+    function tableBuilder(selector) {
+
+        let domElement = $(selector);
+
+        return {
+
+            createTable: function (array) {
+                domElement
+                    .append($('<table id="myTable"></table>')
+                        .append($('<tr id="headers"></tr>')));
+
+                let trHeaders = $('#headers');
+                for (let i = 0; i < array.length; i++) {
+                    trHeaders.append($(`<th></th>`).text(array[i]));
+                }
+
+                trHeaders.append($('<th>Action</th>'));
+            },
+
+            fillData: function (arrayOfArrays) {
+
+                for (let i = 0; i < arrayOfArrays.length; i++) {
+
+                    let innerArray = arrayOfArrays[i];
+                    let table = $('#myTable');
+                    table.append($(`<tr id="${i}"></tr>`));
+                    let currTr = $(`#${i}`);
+
+                    for (let j = 0; j < innerArray.length; j++) {
+                        currTr.append($(`<td></td>`).text(innerArray[j]));
+                    }
+
+                    currTr.append($(`<td></td>`)
+                        .append($('<button>Delete</button>')
+                            .on('click', deleteTr)));
+                }
+
+                function deleteTr() {
+
+                    $(this).parent().parent().remove();
+                }
+            }
+        }
+    }
+</script>
+<script>
+    $(function() {
+        let builder = tableBuilder("#main");
+        builder.createTable(['Name', 'Town']);
+        builder.fillData([
+            ['Maria', 'Sofia'],
+            ['Kiril', 'Varna'],
+            ['Ani <new>', 'Ruse'],
+        ]);
+    });
+</script>
+</body>
+</html>

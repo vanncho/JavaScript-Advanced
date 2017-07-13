@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<input type="text" id="time" style="border:3px solid blue; text-align:center; font-size:2em;" disabled="true"/>
+<script>
+    window.onload = function() { countdown(100); };
+
+    function countdown(time) {
+        let startTime = time;
+        let box = document.getElementById('time');
+        let interval = setInterval(decrement, 1000);
+        
+        function decrement() {
+            startTime--;
+
+            if (startTime === 0) {
+                clearInterval(interval);
+            }
+
+            box.value = `${Math.floor(startTime / 60)}:${('0' + startTime % 60).slice(-2)}`;
+        }
+    }
+
+</script>
+
+</body>
+</html>
