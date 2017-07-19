@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+    <div class="holder">
+        <input type="button" id="summarize" value="Summarize"/>
+        <div id="content">
+            <p><strong>Important text. </strong>Not too important. <strong>Also useful info.</strong></p>
+        </div>
+    </div>
+    <input type="button" id="generate" value="Generate Summary"/>
+<script>
+    function solve(selector) {
+
+        let btn = $(selector);
+        btn.on('click', generateSummary);
+        
+        function generateSummary() {
+
+            let strongs = $('#content strong');
+            let stringArray = [];
+
+            for (let obj of strongs) {
+                stringArray.push($(obj).text());
+            }
+
+            let wrapperDiv = $(strongs).parent();
+            wrapperDiv.append($('<div id="summary"></div>'));
+
+            let summaryDiv = $('#summary');
+            summaryDiv.append($('<h2>Summary</h2>')).append($(`<p>${stringArray.join('')}</p>`));
+        }
+    }
+</script>
+<script>
+    solve('#summarize');
+</script>
+</body>
+</html>
