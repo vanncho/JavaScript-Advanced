@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts Builder</title>
+    <style>
+        article {
+            background: #EEE;
+            padding: 1px;
+            width: 250px;
+            margin: 1px;
+        }
+
+        .title {
+            background: #DDD;
+            padding: 5px;
+            font-weight: bold;
+        }
+
+        .title button {
+            float: right
+        }
+
+        .info {
+            margin: 5px;
+        }
+
+        .info span {
+            display: block;
+        }
+
+        .online {
+            background: #9E9;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div id="main"></div>
+<script>
+    class Contact {
+        constructor(firstName, lastName, phone, email) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.phone = phone;
+            this.email = email;
+            this._online = false;
+        }
+
+        render(id) {
+
+            let domElem = $(`#${id}`);
+            domElem.append($('<article></article>')
+                .append($(`<div class="title">${this.firstName} ${this.lastName}</div>`)
+                    .append($('<button>&#8505;</button>')
+                        .on('click', () => {
+                            let divEl = $(`#${this.lastName}`);
+                            console.log(divEl);
+                            console.log(this.lastName);
+
+                            if (divEl.css('display') === 'none') {
+                                divEl.css('display', 'block');
+                            } else {
+                                divEl.css('display', 'none');
+                            }
+                        })))
+                .append($('<div>')
+                    .attr('id', `${this.lastName}`)
+                    .addClass('info')
+                    .css('display', 'none')
+                    .append($(`<span>&phone; ${this.phone}</span>`))
+                    .append($(`<span>&#9993; ${this.email}</span>`))));
+
+            let info = $('.info');
+        }
+
+        get online() {
+            return this._online;
+        }
+
+        set online(value) {
+
+            this._online = value;
+
+            if (value === true) {
+                $('.title').addClass('online');
+            }
+
+            if (value === false) {
+                $('.title').removeClass('online');
+            }
+        }
+    }
+</script>
+<script>
+    let c = new Contact("Ivan", "Ivanov", "0888 123 456", "i.ivanov@gmail.com");
+
+    c.online = true;
+    c.online = false;
+    console.log(c.online + ' 1');
+    c.render('main');
+
+//    let contacts = [
+//        new Contact("Ivan", "Ivanov", "0888 123 456", "i.ivanov@gmail.com"),
+//        new Contact("Maria", "Petrova", "0899 987 654", "mar4eto@abv.bg"),
+//        new Contact("Jordan", "Kirov", "0988 456 789", "jordk@gmail.com")
+//    ];
+//    contacts.forEach(c => c.render('main'));
+
+////     After 1 second, change the online status to true
+//    setTimeout(() => contacts[1].online = true, 2000);
+//    setTimeout(() => contacts[2].online = false, 2000);
+
+
+
+//    setTimeout(() => c.online = false, 2000);
+//    setTimeout(() => console.log(c.online + ' 2'), 2000);
+</script>
+</body>
+</html>
